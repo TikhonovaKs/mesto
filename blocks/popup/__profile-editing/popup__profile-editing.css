@@ -1,0 +1,17 @@
+.popup__profile-editing {
+  width: 430px;
+  height: 330px;
+  background: #ffffff;
+  border-radius: 10px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+
+@media screen and (max-width: 640px) {
+  .popup__profile-editing {
+    width: 282px;
+    height: 322px;
+    margin-bottom: 0;
+  }
+}

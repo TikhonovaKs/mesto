@@ -12,20 +12,20 @@
         <img src="images/header-logo.svg" alt="Логотип Место" class="logo"> 
     </header>
     <section class="profile">
-        <img class="profile__avatar" src="images/photo-cousteau.jpg" alt="Фотография пользователя в профайле">   
         <div class="profile__info">
-            <h1 class="profile__name">Жак-Ив Кусто
-                <div class="profile__edit-button">
-                    <img class="profile__edit-button-icon" src="images/edit-button.svg" alt="Иконка кнопки редактирования информации профиля">
-                </div>
-            </h1>
-            <p class="profile__working">Исследователь океана</p>  
+        <img class="profile__avatar" src="images/photo-cousteau.jpg" alt="Фотография пользователя в профайле">   
+        <div class="profile__description">
+             <h1 class="profile__name">Жак-Ив Кусто</h1>
+            <div class="profile__edit-button">
+                <img class="profile__edit-button-icon" src="images/edit-button.svg" alt="Иконка кнопки редактирования информации профиля">
+            </div>
+            <p class="profile__job">Исследователь океана</p>  
         </div>
+    </div>
         <div class="profile__add-button">
             <img class="profile__add-button-icon" src="images/plus-add-button.svg" alt="Знак добавления в виде плюса">
         </div>
     </section>
-
     <section class="elements">
         <div class="element">
             <img class="element__image" src="images/photo-grid-karachaevsk.jpg" alt="Изображение старого храма в Карачаевске">
@@ -71,6 +71,23 @@
         </div>
     </section>
     <footer class="footer">&copy; 2020 Mesto Russia</footer>
-    
+    <div class="popup">
+        <section class="popup__container">
+            <img class="popup__icon-close" src="images/icon-close.svg" alt="Иконка закрытия окна">
+            <form class="popup__profile-editing">
+                <h2 class="popup__form-name">Редактировать профиль</h2>
+                <div class="popup__form-container">
+                    <fieldset class="popup__input-container">
+                        <input type="text" class="popup__form-item popup__input-name" required>
+                    </fieldset>
+                    <fieldset class="popup__input-container">
+                        <input type="text" class="popup__form-item popup__input-job" required>
+                    </fieldset>
+                </div>
+                <input type="submit" class="popup__button-save" value="Сохранить">
+            </form>
+        </section>
+    </div>
+    <script src="./scripts/index.js"></script>
 </body>
 </html>

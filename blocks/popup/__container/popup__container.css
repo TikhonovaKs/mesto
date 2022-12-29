@@ -1,0 +1,17 @@
+.popup__container {
+  position: relative;
+  width: 470px;
+  height: 370px;
+  display: flex;
+  margin: calc(100vh / 2 - (165px + 8px + 32px)) auto auto
+    calc(100vw / 2 - 215px);
+}
+
+@media screen and (max-width: 640px) {
+  .popup__container {
+    width: 282px;
+    height: 358px;
+    margin: calc(100vh / 2 - (161px + 16px + 20px)) auto auto
+      calc(100vw / 2 - 141px);
+  }
+}

@@ -1,4 +1,8 @@
 .element__favorites-icon {
-    width: 22px;
-    height: 19px;
+  width: 22px;
+  height: 19px;
+}
+
+.element__favorites-icon:hover {
+  opacity: 50%;
 }
