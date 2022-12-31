@@ -16,74 +16,64 @@
         <img class="profile__avatar" src="images/photo-cousteau.jpg" alt="Фотография пользователя в профайле">   
         <div class="profile__description">
              <h1 class="profile__name">Жак-Ив Кусто</h1>
-            <div class="profile__edit-button">
-                <img class="profile__edit-button-icon" src="images/edit-button.svg" alt="Иконка кнопки редактирования информации профиля">
-            </div>
+            <button class="profile__edit-button"></button>
             <p class="profile__job">Исследователь океана</p>  
         </div>
     </div>
-        <div class="profile__add-button">
-            <img class="profile__add-button-icon" src="images/plus-add-button.svg" alt="Знак добавления в виде плюса">
-        </div>
+        <button class="profile__add-button"></button>
     </section>
     <section class="elements">
         <div class="element">
             <img class="element__image" src="images/photo-grid-karachaevsk.jpg" alt="Изображение старого храма в Карачаевске">
             <div class="element__description">
                 <h2 class="element__name">Карачаевск</h2>
-                <img class="element__favorites-icon" src="images/icon-favorites.svg" alt="Иконка сердечка">
+                <button class="element__like-button"></button>
             </div>
         </div>
         <div class="element">
             <img class="element__image" src="images/photo-grid-mountain-elbrus.jpg" alt="Изображение Эльбруса">
             <div class="element__description">
                 <h2 class="element__name">Эльбрус</h2>
-                <img class="element__favorites-icon" src="images/icon-favorites.svg" alt="Иконка сердечка">
+                <button class="element__like-button"></button>
             </div>
         </div>
         <div class="element">
             <img class="element__image" src="images/photo-grid-dombayjpg.jpg" alt="Изображение Думбая">
             <div class="element__description">
                 <h2 class="element__name">Домбай</h2>
-                <img class="element__favorites-icon" src="images/icon-favorites.svg" alt="Иконка сердечка">
+                <button class="element__like-button"></button>
             </div>
         </div>
         <div class="element">
             <img class="element__image" src="images/photo-grid-karelia.jpg" alt="Изображение Карелия">
             <div class="element__description">
                 <h2 class="element__name">Карелия</h2>
-                <img class="element__favorites-icon" src="images/icon-favorites.svg" alt="Иконка сердечка">
+                <button class="element__like-button"></button>
             </div>
         </div>
         <div class="element">
             <img class="element__image" src="images/photo-grid-kolsky.jpg" alt="Изображение Кольского">
             <div class="element__description">
                 <h2 class="element__name">Кольский</h2>
-                <img class="element__favorites-icon" src="images/icon-favorites.svg" alt="Иконка сердечка">
+                <button class="element__like-button"></button>
             </div>
         </div>
         <div class="element">
             <img class="element__image" src="images/photo-grid-kosa.jpg" alt="Изображение Коса">
             <div class="element__description">
                 <h2 class="element__name">Коса</h2>
-                <img class="element__favorites-icon" src="images/icon-favorites.svg" alt="Иконка сердечка">
+                <button class="element__like-button"></button>
             </div>
         </div>
     </section>
     <footer class="footer">&copy; 2020 Mesto Russia</footer>
     <div class="popup">
         <section class="popup__container">
-            <img class="popup__icon-close" src="images/icon-close.svg" alt="Иконка закрытия окна">
-            <form class="popup__profile-editing">
+            <button class="popup__button-close"></button>
+            <form class="popup__profile-editing" name="profile">
                 <h2 class="popup__form-name">Редактировать профиль</h2>
-                <div class="popup__form-container">
-                    <fieldset class="popup__input-container">
-                        <input type="text" class="popup__form-item popup__input-name" required>
-                    </fieldset>
-                    <fieldset class="popup__input-container">
-                        <input type="text" class="popup__form-item popup__input-job" required>
-                    </fieldset>
-                </div>
+                <input type="text" name="name" class="popup__form-item popup__input-name" required>
+                <input type="text" name="job" class="popup__form-item popup__input-job" required>  
                 <input type="submit" class="popup__button-save" value="Сохранить">
             </form>
         </section>

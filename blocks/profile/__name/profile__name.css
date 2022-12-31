@@ -2,8 +2,8 @@
   color: white;
   font-size: 42px;
   line-height: 39px;
+  font-weight: 500;
   margin: 0;
-  min-height: 39px;
   align-self: end;
   text-overflow: ellipsis;
   white-space: nowrap;

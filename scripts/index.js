@@ -1,6 +1,6 @@
 // выборка DOM элементов
 const popupElement = document.querySelector(".popup");
-const formCloseButtonElement = popupElement.querySelector(".popup__icon-close");
+const formCloseButtonElement = popupElement.querySelector(".popup__button-close");
 const profileEditButtonElement = document.querySelector(".profile__edit-button");
 
 // Находим форму в DOM
@@ -25,23 +25,21 @@ const closePopup = function () {
     popupElement.classList.remove("popup_is-opened");
   }
 
-// регистрация обработчиков событий по клику
-profileEditButtonElement.addEventListener("click", openPopup);
-formCloseButtonElement.addEventListener("click", closePopup);
-
-
 // Обработчик «отправки» формы, хотя пока
 // она никуда отправляться не будет
 function handleFormSubmit (evt) {
-    evt.preventDefault();
+  evt.preventDefault();
 
-    const nameValue = nameInput.value;
-    nameTitle.textContent = nameValue;
+  const nameValue = nameInput.value;
+  nameTitle.textContent = nameValue;
 
-    const jobValue=jobInput.value;
-    jobTitle.textContent=jobValue;
+  const jobValue=jobInput.value;
+  jobTitle.textContent=jobValue;
     
-    closePopup();
-    } 
+  closePopup();
+  } 
 
+// регистрация обработчиков событий по клику
+profileEditButtonElement.addEventListener("click", openPopup);
+formCloseButtonElement.addEventListener("click", closePopup);
 formElement.addEventListener('submit', handleFormSubmit); 
