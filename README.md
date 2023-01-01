@@ -49,4 +49,4 @@
 Все коммиты бфли смержены в ветку develop, протестированы и исправлены.
 
 ### Ссылка на GitHub Pages:
-* https://github.com/TikhonovaKs/mesto.git
+* https://tikhonovaks.github.io/mesto/
