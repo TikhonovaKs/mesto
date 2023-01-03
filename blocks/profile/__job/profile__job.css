@@ -3,7 +3,6 @@
   font-size: 18px;
   line-height: 22px;
   color: white;
-  min-height: 18px;
   align-self: start;
   margin: 0;
   grid-column-start: 1;
@@ -17,7 +16,6 @@
   .profile__job {
     font-size: 14px;
     line-height: 17px;
-    height: 14px;
     justify-self: center;
   }
 }

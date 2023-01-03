@@ -1,83 +1,89 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mesto</title>
-    <link rel="stylesheet" href="pages/index.css">
-</head>
-<body class="page">
+    <link rel="stylesheet" href="pages/index.css" />
+  </head>
+  <body class="page">
     <header class="header">
-        <img src="images/header-logo.svg" alt="Логотип Место" class="logo"> 
+      <img src="images/header-logo.svg" alt="Логотип Место" class="logo" />
     </header>
-    <section class="profile">
+    <main>
+      <section class="profile">
         <div class="profile__info">
-        <img class="profile__avatar" src="images/photo-cousteau.jpg" alt="Фотография пользователя в профайле">   
-        <div class="profile__description">
-             <h1 class="profile__name">Жак-Ив Кусто</h1>
-            <button class="profile__edit-button"></button>
-            <p class="profile__job">Исследователь океана</p>  
+          <img class="profile__avatar" src="images/photo-cousteau.jpg" alt="Фотография пользователя в профайле" />
+          <div class="profile__description">
+            <h1 class="profile__name">Жак-Ив Кусто</h1>
+            <button class="profile__edit-button" aria-label="Редактирование профиля"></button>
+            <p class="profile__job">Исследователь океана</p>
+          </div>
         </div>
-    </div>
-        <button class="profile__add-button"></button>
-    </section>
-    <section class="elements">
+        <button class="profile__add-button" aria-label="Добавление контента в профиль"></button>
+      </section>
+      <section class="elements">
         <div class="element">
-            <img class="element__image" src="images/photo-grid-karachaevsk.jpg" alt="Изображение старого храма в Карачаевске">
-            <div class="element__description">
-                <h2 class="element__name">Карачаевск</h2>
-                <button class="element__like-button"></button>
-            </div>
-        </div>
-        <div class="element">
-            <img class="element__image" src="images/photo-grid-mountain-elbrus.jpg" alt="Изображение Эльбруса">
-            <div class="element__description">
-                <h2 class="element__name">Эльбрус</h2>
-                <button class="element__like-button"></button>
-            </div>
+          <img
+            class="element__image"
+            src="images/photo-grid-karachaevsk.jpg"
+            alt="Изображение старого храма в Карачаевске"
+          />
+          <div class="element__description">
+            <h2 class="element__name">Карачаевск</h2>
+            <button class="element__like-button" aria-label="Выбор понравившегося элемента"></button>
+          </div>
         </div>
         <div class="element">
-            <img class="element__image" src="images/photo-grid-dombayjpg.jpg" alt="Изображение Думбая">
-            <div class="element__description">
-                <h2 class="element__name">Домбай</h2>
-                <button class="element__like-button"></button>
-            </div>
+          <img class="element__image" src="images/photo-grid-mountain-elbrus.jpg" alt="Изображение Эльбруса" />
+          <div class="element__description">
+            <h2 class="element__name">Эльбрус</h2>
+            <button class="element__like-button" aria-label="Выбор понравившегося элемента"></button>
+          </div>
         </div>
         <div class="element">
-            <img class="element__image" src="images/photo-grid-karelia.jpg" alt="Изображение Карелия">
-            <div class="element__description">
-                <h2 class="element__name">Карелия</h2>
-                <button class="element__like-button"></button>
-            </div>
+          <img class="element__image" src="images/photo-grid-dombayjpg.jpg" alt="Изображение Думбая" />
+          <div class="element__description">
+            <h2 class="element__name">Домбай</h2>
+            <button class="element__like-button" aria-label="Выбор понравившегося элемента"></button>
+          </div>
         </div>
         <div class="element">
-            <img class="element__image" src="images/photo-grid-kolsky.jpg" alt="Изображение Кольского">
-            <div class="element__description">
-                <h2 class="element__name">Кольский</h2>
-                <button class="element__like-button"></button>
-            </div>
+          <img class="element__image" src="images/photo-grid-karelia.jpg" alt="Изображение Карелия" />
+          <div class="element__description">
+            <h2 class="element__name">Карелия</h2>
+            <button class="element__like-button" aria-label="Выбор понравившегося элемента"></button>
+          </div>
         </div>
         <div class="element">
-            <img class="element__image" src="images/photo-grid-kosa.jpg" alt="Изображение Коса">
-            <div class="element__description">
-                <h2 class="element__name">Коса</h2>
-                <button class="element__like-button"></button>
-            </div>
+          <img class="element__image" src="images/photo-grid-kolsky.jpg" alt="Изображение Кольского" />
+          <div class="element__description">
+            <h2 class="element__name">Кольский</h2>
+            <button class="element__like-button" aria-label="Выбор понравившегося элемента"></button>
+          </div>
         </div>
-    </section>
-    <footer class="footer">&copy; 2020 Mesto Russia</footer>
+        <div class="element">
+          <img class="element__image" src="images/photo-grid-kosa.jpg" alt="Изображение Коса" />
+          <div class="element__description">
+            <h2 class="element__name">Коса</h2>
+            <button class="element__like-button" aria-label="Выбор понравившегося элемента"></button>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="footer">&#169; 2020 Mesto Russia</footer>
     <div class="popup">
-        <section class="popup__container">
-            <button class="popup__button-close"></button>
-            <form class="popup__profile-editing" name="profile">
-                <h2 class="popup__form-name">Редактировать профиль</h2>
-                <input type="text" name="name" class="popup__form-item popup__input-name" required>
-                <input type="text" name="job" class="popup__form-item popup__input-job" required>  
-                <input type="submit" class="popup__button-save" value="Сохранить">
-            </form>
-        </section>
+      <div class="popup__container">
+        <button class="popup__button-close" aria-label="Закрытие окна редактирования"></button>
+        <h2 class="popup__title">Редактировать профиль</h2>
+        <form class="popup__form" name="profile">
+          <input type="text" name="name" class="popup__input popup__input_data_name" required />
+          <input type="text" name="job" class="popup__input popup__input_data_job" required />
+          <button type="submit" class="popup__button-save" aria-label="Сохранить изменения">Сохранить</button>
+        </form>
+      </div>
     </div>
     <script src="./scripts/index.js"></script>
-</body>
+  </body>
 </html>

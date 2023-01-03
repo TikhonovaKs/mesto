@@ -8,6 +8,7 @@
   background-repeat: no-repeat;
   background-color: black;
   background-position: center;
+  margin-bottom: 3px;
 }
 
 .profile__edit-button:hover {
@@ -18,5 +19,6 @@
   .profile__edit-button {
     width: 17px;
     height: 17px;
+    margin-bottom: 5px;
   }
 }
