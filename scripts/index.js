@@ -71,7 +71,7 @@ const initialCards = [
 // Выбор DOM элементов для управления списком мест:
 const listOfPlaces = document.querySelector('.elements');
 const placeTemplate = document.querySelector('#place-template').content;
-// открытие, закрытие попапа:
+// открытие, закрытие попапа добавление мест:
 const popupAddElement = document.querySelector('.popup-add');
 const profileAddButtonElement = document.querySelector('.profile__add-button');
 const popupAddCloseButton = popupAddElement.querySelector('.popup-add__button-close');
@@ -123,13 +123,13 @@ function createSinglePlace(name, url) {
   const imageCloseButtonElement = document.querySelector('.popup-image__button-close');
   const popupImageElement = document.querySelector('.popup-image');
   const openPopupImage = function () {
-    popupImageElement.querySelector('.popup-image__picture').src=url;
-    popupImageElement.querySelector('.popup-image__name').textContent=name;
+    popupImageElement.querySelector('.popup-image__picture').src = url;
+    popupImageElement.querySelector('.popup-image__name').textContent = name;
     popupImageElement.classList.add('popup-image_is-opened');
   };
   imagePlaceElement.addEventListener('click', openPopupImage);
   // Закрытие попапа картинки:
-  const closePopupImage = function() {
+  const closePopupImage = function () {
     popupImageElement.classList.remove('popup-image_is-opened');
   };
   imageCloseButtonElement.addEventListener('click', closePopupImage);
