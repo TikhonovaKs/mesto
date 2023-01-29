@@ -4,7 +4,7 @@ const nameTitle = document.querySelector('.profile__name');
 const jobTitle = document.querySelector('.profile__job');
 const profileAddCardButton = document.querySelector('.profile__add-button');
 // выборка DOM элементов общего попап:
-const popupCloseButton = document.querySelectorAll('.popup__button-close');
+const popupCloseButtonList = document.querySelectorAll('.popup__button-close');
 // выборка DOM элементов для попапа Profile:
 const popupProfile = document.querySelector('.popup_type_edit');
 const popupProfileForm = popupProfile.querySelector('.popup__form');
@@ -13,10 +13,12 @@ const jobProfileInput = popupProfile.querySelector('.popup__input_data_job');
 // выборка DOM  элементов для попапа добавления новой карточки:
 const popupCard = document.querySelector('.popup_type_card');
 const popupPlaceNameInput = popupCard.querySelector('.popup__input_data_place');
-const popupPlacelinkInput = popupCard.querySelector('.popup__input_data_link');
+const popupPlaceLinkInput = popupCard.querySelector('.popup__input_data_link');
 const popupPlaceSaveButton = popupCard.querySelector('.popup__button-save');
 // Выбор DOM элементов для попапа Зум картинки:
 const popupZoomImage = document.querySelector('.popup_type_image');
+const popupZoomImageElement = popupZoomImage.querySelector('.popup__picture');
+const popupZoomImageName = popupZoomImage.querySelector('.popup__picture-title');
 // Выбор DOM элементов для управления списком мест:
 const cardsContainer = document.querySelector('.elements');
 const placeTemplate = document.querySelector('#place-template').content;
@@ -25,13 +27,17 @@ const placeTemplate = document.querySelector('#place-template').content;
 const openPopup = function (currentPopup) {
   currentPopup.classList.add('popup_is-opened');
 };
+
 // общая функция закрытия попапа:
-const closePopup = function (event) {
-  const currentPopup = event.currentTarget.closest('.popup');
+const closePopup = function (currentPopup) {
   currentPopup.classList.remove('popup_is-opened');
 };
-popupCloseButton.forEach(function (element) {
-  element.addEventListener('click', closePopup);
+// привязываем функцию закрытия попапа ко всем кнопкам крестик:
+popupCloseButtonList.forEach(function (element) {
+  element.addEventListener('click', function (evt) {
+    const currentPopup = evt.currentTarget.closest('.popup');
+    closePopup(currentPopup);
+  });
 });
 
 // Открытие попапа Profile:
@@ -55,7 +61,8 @@ function handleProfileFormSubmit(evt) {
   const jobValue = jobProfileInput.value;
   jobTitle.textContent = jobValue;
 
-  closePopup(evt);
+  const currentPopup = evt.currentTarget.closest('.popup');
+  closePopup(currentPopup);
 }
 popupProfileForm.addEventListener('submit', handleProfileFormSubmit);
 
@@ -70,11 +77,12 @@ function createSinglePlace(place) {
   const placeElement = placeTemplate.cloneNode(true);
 
   const placeElementImage = placeElement.querySelector('.element__image');
+  const placeElementName = placeElement.querySelector('.element__name');
   placeElementImage.src = place.url;
   // записываем в свойсто src элемента с классом .element__image
   // значения поля link каждого объекта item массива initialCards);
   placeElementImage.alt = place.name;
-  placeElementImage.textContent = place.name;
+  placeElementName.textContent = place.name;
   // записываем в свойсто textContent элемента с классом .element__name
   // значения поля name каждого объекта item массива initialCards)
 
@@ -91,16 +99,16 @@ function createSinglePlace(place) {
   });
   // Открытие попапа картинки:
   const openPopupImage = function () {
-    popupZoomImage.querySelector('.popup__picture').src = place.url;
-    popupZoomImage.querySelector('.popup__picture').alt = place.name;
-    popupZoomImage.querySelector('.popup__picture-title').textContent = place.name;
+    popupZoomImageElement.src = place.url;
+    popupZoomImageElement.alt = place.name;
+    popupZoomImageName.textContent = place.name;
     openPopup(popupZoomImage);
   };
   placeElementImage.addEventListener('click', openPopupImage);
   return placeElement;
 }
 // Размещение нового элемента в список:
-function placementSinglePlace(place) {
+function addPlace(place) {
   const newPlaceElement = createSinglePlace(place);
 
   cardsContainer.prepend(newPlaceElement);
@@ -112,13 +120,14 @@ function handleAddPlace(evt) {
   evt.preventDefault();
 
   const placeInputValue = popupPlaceNameInput.value;
-  const linkInputValue = popupPlacelinkInput.value;
+  const linkInputValue = popupPlaceLinkInput.value;
   const place = {};
   place.name = placeInputValue;
   place.url = linkInputValue;
-  placementSinglePlace(place);
+  addPlace(place);
 
-  closePopup(evt);
+  const currentPopup = evt.currentTarget.closest('.popup');
+  closePopup(currentPopup);
 }
 popupPlaceSaveButton.addEventListener('click', handleAddPlace);
 
@@ -127,5 +136,5 @@ initialCards.forEach(function (item) {
   const place = {};
   place.name = item.name;
   place.url = item.link;
-  placementSinglePlace(place);
+  addPlace(place);
 });
