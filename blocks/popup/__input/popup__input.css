@@ -24,3 +24,7 @@
     margin: 0 22px 45px 22px;
   }
 }
+
+.popup__input.popup__input_type_error {
+  border-color: rgba(255, 0, 0, 1);
+}
