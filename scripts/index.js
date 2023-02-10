@@ -32,6 +32,14 @@ const openPopup = function (currentPopup) {
 const closePopup = function (currentPopup) {
   currentPopup.classList.remove('popup_is-opened');
 };
+const closePopupOnOutsideClick = function (evt) {
+  const currentPopup = evt.target.closest('.popup');
+  if (!currentPopup) {
+    const activePopup = document.querySelector(formValidationConfig.activePopupSelector);
+    if (activePopup) closePopup(activePopup, formValidationConfig);
+  }
+};
+
 // привязываем функцию закрытия попапа ко всем кнопкам крестик:
 popupCloseButtonList.forEach(function (element) {
   element.addEventListener('click', function (evt) {
@@ -47,7 +55,9 @@ const openPopupProfile = function () {
 
   const jobTitleValue = jobTitle.textContent;
   jobProfileInput.value = jobTitleValue;
+
   openPopup(popupProfile);
+  toggleButton(popupProfileForm, formValidationConfig);
 };
 profileEditButton.addEventListener('click', openPopupProfile);
 
