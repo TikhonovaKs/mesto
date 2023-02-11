@@ -4,7 +4,6 @@ const formValidationConfig = {
   errorClass: 'popup__input_type_error',
   buttonSelector: '.popup__button-save',
   buttonDisabledClass: 'button-save_inactive',
-  popupSelector: '.popup',
 };
 
 /**
@@ -82,32 +81,5 @@ function addInputListners(form, config) {
     //при возникновении события инпута
   });
 }
-
-document.addEventListener('keydown', function (evt) {
-  if (evt.key === 'Escape') {
-    const popupList = Array.from(document.querySelectorAll(formValidationConfig.popupSelector));
-    popupList.forEach((popup) => {
-      closePopup(popup, formValidationConfig);
-    });
-  }
-});
-
-/**
- * Закрыть попап из вне
- * @param {*} config
- */
-function externalClosePopups(config) {
-  const popupList = Array.from(document.querySelectorAll(config.popupSelector));
-
-  popupList.forEach((currentPopup) => {
-    currentPopup.addEventListener('mousedown', (evt) => {
-      if (evt.target.classList.contains('popup_is-opened')) {
-        closePopup(currentPopup);
-      }
-    });
-  });
-}
-
-externalClosePopups(formValidationConfig);
 
 enableValidation(formValidationConfig);
