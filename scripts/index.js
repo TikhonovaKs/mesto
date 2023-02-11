@@ -1,4 +1,5 @@
 // выборка DOM элементов главная страница:
+const popupsList = document.querySelectorAll('.popup');
 const profileEditButton = document.querySelector('.profile__edit-button');
 const nameTitle = document.querySelector('.profile__name');
 const jobTitle = document.querySelector('.profile__job');
@@ -12,6 +13,7 @@ const nameProfileInput = popupProfile.querySelector('.popup__input_data_name');
 const jobProfileInput = popupProfile.querySelector('.popup__input_data_job');
 // выборка DOM  элементов для попапа добавления новой карточки:
 const popupCard = document.querySelector('.popup_type_card');
+const popupCardForm = popupCard.querySelector('.popup__form');
 const popupPlaceNameInput = popupCard.querySelector('.popup__input_data_place');
 const popupPlaceLinkInput = popupCard.querySelector('.popup__input_data_link');
 const popupPlaceSaveButton = popupCard.querySelector('.popup__button-save');
@@ -26,27 +28,37 @@ const placeTemplate = document.querySelector('#place-template').content;
 // общая функция открытия попапа:
 const openPopup = function (currentPopup) {
   currentPopup.classList.add('popup_is-opened');
+  document.addEventListener('keydown', closeByEscape);
 };
 
 // общая функция закрытия попапа:
 const closePopup = function (currentPopup) {
   currentPopup.classList.remove('popup_is-opened');
-};
-const closePopupOnOutsideClick = function (evt) {
-  const currentPopup = evt.target.closest('.popup');
-  if (!currentPopup) {
-    const activePopup = document.querySelector(formValidationConfig.activePopupSelector);
-    if (activePopup) closePopup(activePopup, formValidationConfig);
-  }
+  document.removeEventListener('keydown', closeByEscape);
 };
 
-// привязываем функцию закрытия попапа ко всем кнопкам крестик:
-popupCloseButtonList.forEach(function (element) {
-  element.addEventListener('click', function (evt) {
-    const currentPopup = evt.currentTarget.closest('.popup');
-    closePopup(currentPopup);
+// закрытие попапа крестиком или нажатием на оверлей
+popupsList.forEach((popup) => {
+  popup.addEventListener('mousedown', (evt) => {
+    if (evt.target.classList.contains('popup_is-opened')) {
+      closePopup(popup);
+    }
+    if (evt.target.classList.contains('popup__button-close')) {
+      closePopup(popup);
+    }
   });
 });
+
+/**
+ * Закрыть попап нажатием esc
+ * @param {*} evt
+ */
+function closeByEscape(evt) {
+  if (evt.key === 'Escape') {
+    const openedPopup = document.querySelector('.popup_is-opened');
+    closePopup(openedPopup, formValidationConfig);
+  }
+}
 
 // Открытие попапа Profile:
 const openPopupProfile = function () {
@@ -79,6 +91,7 @@ popupProfileForm.addEventListener('submit', handleProfileFormSubmit);
 // Открытие формы добавления новой карточки:
 const openPopupAddCard = function () {
   openPopup(popupCard);
+  toggleButton(popupCardForm, formValidationConfig);
 };
 profileAddCardButton.addEventListener('click', openPopupAddCard);
 
@@ -135,6 +148,7 @@ function handleAddPlace(evt) {
   place.name = placeInputValue;
   place.url = linkInputValue;
   addPlace(place);
+  evt.target.closest('form').reset();
 
   const currentPopup = evt.currentTarget.closest('.popup');
   closePopup(currentPopup);
