@@ -1,5 +1,6 @@
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
+import { initialCards, formValidationConfig } from './constants.js';
 
 // выборка DOM элементов главная страница:
 const popupsList = document.querySelectorAll('.popup');
@@ -17,14 +18,11 @@ const popupCard = document.querySelector('.popup_type_card');
 const popupPlaceNameInput = popupCard.querySelector('.popup__input_data_place');
 const popupPlaceLinkInput = popupCard.querySelector('.popup__input_data_link');
 const popupPlaceSaveButton = popupCard.querySelector('.popup__button-save');
-
-const formValidationConfig = {
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  errorClass: 'popup__input_type_error',
-  buttonSelector: '.popup__button-save',
-  buttonDisabledClass: 'button-save_inactive',
-};
+const formAddPlace = popupCard.querySelector('.popup__form');
+// выборка DOM  элементов для попапа открытия карточки:
+const popupZoomImage = document.querySelector('.popup_type_image');
+const popupZoomImageElement = popupZoomImage.querySelector('.popup__picture');
+const popupZoomImageName = popupZoomImage.querySelector('.popup__picture-title');
 
 /**
  * Open current popup
@@ -47,10 +45,7 @@ const closePopup = function (currentPopup) {
 // Close popup by overlay or cross button
 popupsList.forEach((popup) => {
   popup.addEventListener('mousedown', (evt) => {
-    if (evt.target.classList.contains('popup_is-opened')) {
-      closePopup(popup);
-    }
-    if (evt.target.classList.contains('popup__button-close')) {
+    if (evt.target.classList.contains('popup_is-opened') || evt.target.classList.contains('popup__button-close')) {
       closePopup(popup);
     }
   });
@@ -95,7 +90,7 @@ function handleProfileFormSubmit(evt) {
   const jobValue = jobProfileInput.value;
   jobTitle.textContent = jobValue;
 
-  const currentPopup = evt.currentTarget.closest('.popup');
+  const currentPopup = popupProfile;
   closePopup(currentPopup);
 }
 popupProfileForm.addEventListener('submit', handleProfileFormSubmit);
@@ -117,8 +112,8 @@ profileAddCardButton.addEventListener('click', openPopupAddCard);
  */
 function addPlace(place) {
   const card = new Card(config.selectorTemplatePlace, place, openPopup);
-  const element = card.getElement();
-  placeList.append(element);
+  const element = card.createCard();
+  placeList.prepend(element);
   //добавить полученный placeElement в начало списка cardsContainer
 }
 
@@ -131,16 +126,21 @@ function handleAddPlace(evt) {
 
   const placeInputValue = popupPlaceNameInput.value;
   const linkInputValue = popupPlaceLinkInput.value;
-  const place = {};
+  const place = {
+    name: placeInputValue,
+    link: linkInputValue,
+  };
   place.name = placeInputValue;
   place.link = linkInputValue;
   addPlace(place);
-  evt.target.closest('form').reset();
 
-  const currentPopup = evt.currentTarget.closest('.popup');
+  formAddPlace.reset();
+
+  const currentPopup = popupCard;
   closePopup(currentPopup);
 }
-popupPlaceSaveButton.addEventListener('click', handleAddPlace);
+formAddPlace.addEventListener('submit', handleAddPlace);
+
 
 const config = {
   selectorPlaceList: '.elements',
@@ -149,11 +149,17 @@ const config = {
 
 const placeList = document.querySelector(config.selectorPlaceList);
 
-//
 for (const item of initialCards) {
-  const card = new Card(config.selectorTemplatePlace, item, openPopup);
-  const element = card.getElement();
+  const card = new Card(config.selectorTemplatePlace, item, handleOpenZoomImage);
+  const element = card.createCard();
   placeList.append(element);
+}
+
+function handleOpenZoomImage(name, link) {
+  popupZoomImageElement.src = link;
+  popupZoomImageElement.alt = name;
+  popupZoomImageName.textContent = name;
+  openPopup(popupZoomImage);
 }
 
 /**
