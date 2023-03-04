@@ -3,7 +3,7 @@ class FormValidator {
     this._config = formValidationConfig;
     this._form = form;
 
-    this._disableSubmit = this._disableSubmit.bind(this);
+    this._buttonSubmit = this._form.querySelector(this._config.buttonSelector);
     this._handleFormInput = this._handleFormInput.bind(this);
     this._toggleButton = this._toggleButton.bind(this);
   }
@@ -13,7 +13,9 @@ class FormValidator {
    */
   enableValidation() {
     this._form.addEventListener('submit', this._disableSubmit);
-
+   
+    this._resetFormAddPlaceFields=this._resetFormAddPlaceFields.bind(this);
+    this._form.addEventListener('reset', this._resetFormAddPlaceFields);
     this._addInputListners();
     this._toggleButton();
   }
@@ -25,7 +27,9 @@ class FormValidator {
   _disableSubmit(event) {
     event.preventDefault();
   }
-
+  _resetFormAddPlaceFields(event) {
+    setTimeout(() => this._toggleButton(), 0)
+  }
   /**
    * Обработать ввод в Input
    * @param {*} event событие input
@@ -36,7 +40,6 @@ class FormValidator {
 
     const inputId = input.id;
     const errorElement = document.querySelector(`#${inputId}-error`);
-    console.log(errorElement);
 
     if (input.validity.valid) {
       input.classList.remove(this._config.errorClass);
@@ -51,11 +54,10 @@ class FormValidator {
    * Переключить кнопку
    */
   _toggleButton() {
-    const buttonSubmit = this._form.querySelector(this._config.buttonSelector);
     const isFormValid = this._form.checkValidity(); //проверка всей формы на валидность
 
-    buttonSubmit.disabled = !isFormValid;
-    buttonSubmit.classList.toggle('button-save_inactive', !isFormValid);
+    this._buttonSubmit.disabled = !isFormValid;
+    this._buttonSubmit.classList.toggle(this._config.buttonDisabledClass, !isFormValid);
   }
 
   /**
@@ -63,14 +65,14 @@ class FormValidator {
    */
   _addInputListners() {
     const inputList = Array.from(this._form.querySelectorAll(this._config.inputSelector));
-    const that = this;
-    inputList.forEach(function (item) {
+    
+    inputList.forEach (item => {
       item.addEventListener('input', (event) => {
-        that._handleFormInput(event);
-        that._toggleButton();
+        this._handleFormInput(event);
+        this._toggleButton();
       });
     });
   }
-}
 
+}
 export default FormValidator;
