@@ -32,3 +32,8 @@ export const formValidationConfig = {
   buttonSelector: '.popup__button-save',
   buttonDisabledClass: 'button-save_inactive',
 };
+
+export const cardConfig = {
+  selectorPlaceList: '.elements',
+  selectorTemplatePlace: '.place-template',
+};

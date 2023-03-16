@@ -1,4 +1,5 @@
 import Card from './Card.js';
+import Section from './Section.js';
 import FormValidator from './FormValidator.js';
 import { initialCards, formValidationConfig } from './constants.js';
 
@@ -108,16 +109,16 @@ const openPopupAddCard = function () {
 };
 profileAddCardButton.addEventListener('click', openPopupAddCard);
 
-/**
- * Add a new element in the list
- * @param {*} place
- */
-function addPlace(place) {
-  const card = new Card(config.selectorTemplatePlace, place, openPopup);
-  const element = card.createCard();
-  placeList.prepend(element);
-  //добавить полученный placeElement в начало списка cardsContainer
-}
+// /**
+//  * Add a new element in the list
+//  * @param {*} place
+//  */
+// function addPlace(place) {
+//   const card = new Card(config.selectorTemplatePlace, place, openPopup);
+//   const element = card.createCard();
+//   placeList.prepend(element);
+//   //добавить полученный placeElement в начало списка cardsContainer
+// }
 
 /**
  * Handle the events of adding new elements
@@ -143,19 +144,21 @@ function handleAddPlace(evt) {
 }
 formAddPlace.addEventListener('submit', handleAddPlace);
 
-
 const config = {
+  selectorPlaceContainer: '.place-container',
   selectorPlaceList: '.elements',
   selectorTemplatePlace: '.place-template',
+  selectorTemplatePlaceList: '.place-list-template',
 };
 
-const placeList = document.querySelector(config.selectorPlaceList);
-
-for (const item of initialCards) {
+function renderer(item) {
   const card = new Card(config.selectorTemplatePlace, item, handleOpenZoomImage);
-  const element = card.createCard();
-  placeList.append(element);
+  return card;
 }
+
+const placeContainer = document.querySelector(config.selectorPlaceContainer);
+const section = new Section(config.selectorTemplatePlaceList, initialCards, renderer);
+placeContainer.prepend(section.getElement());
 
 function handleOpenZoomImage(name, link) {
   popupZoomImageElement.src = link;
@@ -163,6 +166,21 @@ function handleOpenZoomImage(name, link) {
   popupZoomImageName.textContent = name;
   openPopup(popupZoomImage);
 }
+
+// const placeList = document.querySelector(config.selectorPlaceList);
+
+// for (const item of initialCards) {
+//   const card = new Card(config.selectorTemplatePlace, item /*handleOpenZoomImage*/);
+//   const element = card.getElement();
+//   placeList.append(element);
+// }
+
+// function handleOpenZoomImage(name, link) {
+//   popupZoomImageElement.src = link;
+//   popupZoomImageElement.alt = name;
+//   popupZoomImageName.textContent = name;
+//   openPopup(popupZoomImage);
+// }
 
 /**
  * Activate form validation
