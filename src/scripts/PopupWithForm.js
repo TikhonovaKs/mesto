@@ -30,11 +30,10 @@ class PopupWithForm extends Popup {
   }
 
   openPopup(data) {
-    if(data)
-    {
-    for (const property in data) {
-    const input = this._popupElement.querySelector(`.popup__input[name=${property}]`);
-input.value=data[property];
+    if (data) {
+      for (const property in data) {
+        const input = this._popupElement.querySelector(`.popup__input[name=${property}]`);
+        input.value = data[property];
       }
     }
     this._formValidator.enableValidation();

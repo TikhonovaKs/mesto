@@ -7,19 +7,18 @@ class Popup {
     // this.setListeners();
   }
 
-  
-_closeByEscape(evt) {
+  _closeByEscape(evt) {
     if (evt.key === 'Escape') {
       //const openedPopup = this._popupElement.querySelector('.popup_is-opened');
       this.closePopup();
     }
   }
 
-_closeByOverlayCross(evt) { 
+  _closeByOverlayCross(evt) {
     if (evt.target.classList.contains('popup_is-opened') || evt.target.classList.contains('popup__button-close')) {
       this.closePopup();
     }
-}
+  }
 
   setListeners() {
     this._popupElement.addEventListener('keydown', this._closeByEscape);

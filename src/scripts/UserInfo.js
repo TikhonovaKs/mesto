@@ -1,8 +1,4 @@
 class UserInfo {
-//   constructor(description, name) {
-//     this._description = description;
-//     this._name = name;
-//}
   getUserInfo() {
     const job = document.querySelector('.profile__job').textContent;
     const name = document.querySelector('.profile__name').textContent;
