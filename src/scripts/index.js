@@ -1,186 +1,56 @@
 import Card from './Card.js';
 import Section from './Section.js';
 import FormValidator from './FormValidator.js';
-import { initialCards, formValidationConfig } from './constants.js';
-
+import PopupWithImage from './PopupWithImage.js';
+import PopupWithForm from './PopupWithForm.js';
+import UserInfo from './UserInfo.js';
+import { initialCards, formValidationConfig, config } from './constants.js';
 import '../pages/index.css';
-
-// выборка DOM элементов главная страница:
-const popupsList = document.querySelectorAll('.popup');
-const profileEditButton = document.querySelector('.profile__edit-button');
-const nameTitle = document.querySelector('.profile__name');
-const jobTitle = document.querySelector('.profile__job');
-const profileAddCardButton = document.querySelector('.profile__add-button');
-// выборка DOM элементов для попапа Profile:
-const popupProfile = document.querySelector('.popup_type_edit');
-const popupProfileForm = popupProfile.querySelector('.popup__form');
-const nameProfileInput = popupProfile.querySelector('.popup__input_data_name');
-const jobProfileInput = popupProfile.querySelector('.popup__input_data_job');
-// выборка DOM  элементов для попапа добавления новой карточки:
-const popupCard = document.querySelector('.popup_type_card');
-const popupPlaceNameInput = popupCard.querySelector('.popup__input_data_place');
-const popupPlaceLinkInput = popupCard.querySelector('.popup__input_data_link');
-const popupPlaceSaveButton = popupCard.querySelector('.popup__button-save');
-const formAddPlace = popupCard.querySelector('.popup__form');
-// выборка DOM  элементов для попапа открытия карточки:
-const popupZoomImage = document.querySelector('.popup_type_image');
-const popupZoomImageElement = popupZoomImage.querySelector('.popup__picture');
-const popupZoomImageName = popupZoomImage.querySelector('.popup__picture-title');
-
-/**
- * Open current popup
- * @param {*} currentPopup
- */
-const openPopup = function (currentPopup) {
-  currentPopup.classList.add('popup_is-opened');
-  document.addEventListener('keydown', closeByEscape);
-};
-
-/**
- * Close current popup
- * @param {*} currentPopup
- */
-const closePopup = function (currentPopup) {
-  currentPopup.classList.remove('popup_is-opened');
-  document.removeEventListener('keydown', closeByEscape);
-};
-
-// Close popup by overlay or cross button
-popupsList.forEach((popup) => {
-  popup.addEventListener('mousedown', (evt) => {
-    if (evt.target.classList.contains('popup_is-opened') || evt.target.classList.contains('popup__button-close')) {
-      closePopup(popup);
-    }
-  });
-});
-
-/**
- * Close popup by key esc
- * @param {*} evt
- */
-function closeByEscape(evt) {
-  if (evt.key === 'Escape') {
-    const openedPopup = document.querySelector('.popup_is-opened');
-    closePopup(openedPopup, formValidationConfig);
-  }
-}
-
-/**
- * Open Profile popup
- */
-const openPopupProfile = function () {
-  const nameTitleValue = nameTitle.textContent;
-  nameProfileInput.value = nameTitleValue;
-
-  const jobTitleValue = jobTitle.textContent;
-  jobProfileInput.value = jobTitleValue;
-
-  openPopup(popupProfile);
-  //toggleButton(popupProfileForm, formValidationConfig);
-};
-profileEditButton.addEventListener('click', openPopupProfile);
-
-/**
- * Save inputs of Profile popup
- * @param {*} evt
- */
-function handleProfileFormSubmit(evt) {
-  evt.preventDefault();
-
-  const nameValue = nameProfileInput.value;
-  nameTitle.textContent = nameValue;
-
-  const jobValue = jobProfileInput.value;
-  jobTitle.textContent = jobValue;
-
-  const currentPopup = popupProfile;
-  closePopup(currentPopup);
-}
-popupProfileForm.addEventListener('submit', handleProfileFormSubmit);
-
-// Открытие формы добавления новой карточки:
-
-/**
- * Open the form for adding a new card
- */
-const openPopupAddCard = function () {
-  openPopup(popupCard);
-  //toggleButton(popupCardForm, formValidationConfig);
-};
-profileAddCardButton.addEventListener('click', openPopupAddCard);
-
-// /**
-//  * Add a new element in the list
-//  * @param {*} place
-//  */
-// function addPlace(place) {
-//   const card = new Card(config.selectorTemplatePlace, place, openPopup);
-//   const element = card.createCard();
-//   placeList.prepend(element);
-//   //добавить полученный placeElement в начало списка cardsContainer
-// }
-
-/**
- * Handle the events of adding new elements
- * @param {*} evt
- */
-function handleAddPlace(evt) {
-  evt.preventDefault();
-
-  const placeInputValue = popupPlaceNameInput.value;
-  const linkInputValue = popupPlaceLinkInput.value;
-  const place = {
-    name: placeInputValue,
-    link: linkInputValue,
-  };
-  place.name = placeInputValue;
-  place.link = linkInputValue;
-  addPlace(place);
-
-  formAddPlace.reset();
-
-  const currentPopup = popupCard;
-  closePopup(currentPopup);
-}
-formAddPlace.addEventListener('submit', handleAddPlace);
-
-const config = {
-  selectorPlaceContainer: '.place-container',
-  selectorPlaceList: '.elements',
-  selectorTemplatePlace: '.place-template',
-  selectorTemplatePlaceList: '.place-list-template',
-};
-
-function renderer(item) {
-  const card = new Card(config.selectorTemplatePlace, item, handleOpenZoomImage);
-  return card;
-}
 
 const placeContainer = document.querySelector(config.selectorPlaceContainer);
 const section = new Section(config.selectorTemplatePlaceList, initialCards, renderer);
 placeContainer.prepend(section.getElement());
 
-function handleOpenZoomImage(name, link) {
-  popupZoomImageElement.src = link;
-  popupZoomImageElement.alt = name;
-  popupZoomImageName.textContent = name;
-  openPopup(popupZoomImage);
+function renderer(item) {
+  const card = new Card(config.selectorTemplatePlace, item, handleCardClick);
+  return card;
 }
 
-// const placeList = document.querySelector(config.selectorPlaceList);
+function handleCardClick(name, link) {
+  const popupZoomImage = document.querySelector(config.selectorPopupZoomImage);
+  const zoomImage = new PopupWithImage(popupZoomImage, name, link);
+  zoomImage.setListeners();
+  zoomImage.openPopup();
+}
 
-// for (const item of initialCards) {
-//   const card = new Card(config.selectorTemplatePlace, item /*handleOpenZoomImage*/);
-//   const element = card.getElement();
-//   placeList.append(element);
-// }
+function submitAddPlaceForm(data) {
+  section.addPlace({ name: data.place, link: data.link });
+}
 
-// function handleOpenZoomImage(name, link) {
-//   popupZoomImageElement.src = link;
-//   popupZoomImageElement.alt = name;
-//   popupZoomImageName.textContent = name;
-//   openPopup(popupZoomImage);
-// }
+/**
+ * Open the form for adding a new card
+ */
+const popupAddPlaceElement = document.querySelector(config.selectorPopupAddPlace);
+const addCardButtonElement = document.querySelector(config.selectorAddCardButton);
+const popupAddPlace = new PopupWithForm(popupAddPlaceElement, submitAddPlaceForm, formValidationConfig);
+popupAddPlace.setListeners();
+
+addCardButtonElement.addEventListener('click', () => popupAddPlace.openPopup());
+const userInfo = new UserInfo();
+
+function submitEditProfileForm(data) {
+  userInfo.setUserInfo(data);
+}
+
+/**
+ * Open the form for edit a profile
+ */
+const popupEditProfileElement = document.querySelector(config.selectorPopupEditProfile);
+const editProfileButtonElement = document.querySelector(config.selectorEditProfileButton);
+const popupEditProfile = new PopupWithForm(popupEditProfileElement, submitEditProfileForm, formValidationConfig);
+popupEditProfile.setListeners();
+
+editProfileButtonElement.addEventListener('click', () => popupEditProfile.openPopup(userInfo.getUserInfo()));
 
 /**
  * Activate form validation
