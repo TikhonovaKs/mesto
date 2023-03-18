@@ -13,8 +13,8 @@ class FormValidator {
    */
   enableValidation() {
     this._form.addEventListener('submit', this._disableSubmit);
-   
-    this._resetFormAddPlaceFields=this._resetFormAddPlaceFields.bind(this);
+
+    this._resetFormAddPlaceFields = this._resetFormAddPlaceFields.bind(this);
     this._form.addEventListener('reset', this._resetFormAddPlaceFields);
     this._addInputListners();
     this._toggleButton();
@@ -28,7 +28,7 @@ class FormValidator {
     event.preventDefault();
   }
   _resetFormAddPlaceFields(event) {
-    setTimeout(() => this._toggleButton(), 0)
+    setTimeout(() => this._toggleButton(), 0);
   }
   /**
    * Обработать ввод в Input
@@ -65,14 +65,13 @@ class FormValidator {
    */
   _addInputListners() {
     const inputList = Array.from(this._form.querySelectorAll(this._config.inputSelector));
-    
-    inputList.forEach (item => {
+
+    inputList.forEach((item) => {
       item.addEventListener('input', (event) => {
         this._handleFormInput(event);
         this._toggleButton();
       });
     });
   }
-
 }
 export default FormValidator;

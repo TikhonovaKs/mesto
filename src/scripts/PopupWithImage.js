@@ -3,9 +3,8 @@ import Popup from './Popup.js';
 class PopupWithImage extends Popup {
   constructor(popupElement, name, link) {
     super(popupElement);
-    this._name = name; 
+    this._name = name;
     this._link = link;
-    //this.setListeners();
   }
 
   openPopup() {
@@ -15,10 +14,6 @@ class PopupWithImage extends Popup {
 
     super.openPopup();
   }
-
-//   setListeners() {
-//     super.setListeners();
-//   }
 }
 
 export default PopupWithImage;
