@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mesto</title>
-    <!-- <link rel="stylesheet" href="pages/index.css" /> -->
-    <!-- <script src="./scripts/index.js" type="module"></script> -->
+   <link rel="stylesheet" href="pages/index.css" /> 
+   <script src="./scripts/index.js" type="module"></script> 
 
   </head>
   <body class="page">
@@ -25,7 +25,8 @@
         </div>
         <button class="profile__add-button" aria-label="Добавление контента в профиль" type="button"></button>
       </section>
-      <ul class="elements"></ul>
+      <div class="place-container"></div>
+      <!-- <ul class="elements"></ul> -->
     </main>
     <footer class="footer">&copy; 2020 Mesto Russia</footer>
     <div class="popup popup_type_edit">
@@ -106,6 +107,10 @@
           <button class="element__like-button" aria-label="Выбор понравившегося элемента" type="button"></button>
         </div>
       </li>
+    </template>
+
+    <template class="place-list-template">
+      <ul class="elements"></ul>
     </template>
   </body>
 </html>
