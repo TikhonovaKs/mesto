@@ -8,13 +8,13 @@ module.exports = {
     main: '/src/scripts/index.js',
   },
   output: {
-    path: path.resolve(__dirname, 'build'),
+    path: path.resolve(__dirname, 'dist'),
     filename: 'main.js',
   },
   mode: 'development',
   devServer: {
     static: {
-      directory: path.resolve(__dirname, 'build'),
+      directory: path.resolve(__dirname, 'dist'),
     },
     open: true,
   },
