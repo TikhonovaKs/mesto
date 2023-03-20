@@ -1,13 +1,11 @@
 import Popup from './Popup.js';
-import FormValidator from './FormValidator.js';
 
 class PopupWithForm extends Popup {
-  constructor(popupElement, submitFormHandler, formValidationConfig) {
+  constructor(popupElement, submitFormHandler) {
     super(popupElement);
     this._submitFormHandler = submitFormHandler;
     this._popupForm = this._popupElement.querySelector('.popup__form');
-
-    this._formValidator = new FormValidator(formValidationConfig, this._popupForm);
+    this._popupInput = this._popupElement.querySelectorAll('.popup__input');
   }
 
   setListeners() {
@@ -18,27 +16,33 @@ class PopupWithForm extends Popup {
   _submitForm(evt) {
     evt.preventDefault();
 
+    const data = this._getInputValues();
+    this._submitFormHandler(data);
+    this.close();
+  }
+
+  _getInputValues() {
     const data = {};
-    const inputs = this._popupElement.querySelectorAll('.popup__input');
+    const inputs = this._popupInput;
     inputs.forEach((input) => {
       data[input.name] = input.value;
     });
-    this._submitFormHandler(data);
-    this.closePopup();
-
-    this._popupForm.reset();
+    return data;
   }
 
-  openPopup(data) {
+  open(data) {
     if (data) {
       for (const property in data) {
         const input = this._popupElement.querySelector(`.popup__input[name=${property}]`);
         input.value = data[property];
       }
     }
-    this._formValidator.enableValidation();
+    super.open();
+  }
 
-    super.openPopup();
+  close() {
+    this._popupForm.reset();
+    super.close();
   }
 }
 
