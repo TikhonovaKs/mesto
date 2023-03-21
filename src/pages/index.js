@@ -6,14 +6,19 @@ import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 import { initialCards, formValidationConfig, config } from './constants.js';
 import '../pages/index.css';
-
+ 
 /**
  * Create section of cards
  */
 const placeContainer = document.querySelector(config.selectorPlaceContainer);
 const templatePlaceList = document.querySelector(config.selectorTemplatePlaceList).content.children[0].cloneNode(true);
+placeContainer.prepend(templatePlaceList);
 const section = new Section(templatePlaceList, initialCards, renderer);
-placeContainer.prepend(section.renderItems());
+section.renderItems();
+
+const popupZoomImage = document.querySelector(config.selectorPopupZoomImage);
+const zoomImage = new PopupWithImage(popupZoomImage);
+zoomImage.setListeners();
 
 /**
  * Create a card
@@ -22,12 +27,9 @@ placeContainer.prepend(section.renderItems());
  */
 function renderer(item) {
   const card = new Card(config.selectorTemplatePlace, item, handleCardClick);
-  return card;
+  return card.getElement();
 }
 
-const popupZoomImage = document.querySelector(config.selectorPopupZoomImage);
-const zoomImage = new PopupWithImage(popupZoomImage);
-zoomImage.setListeners();
 /**
  * Open popup image
  */
@@ -40,7 +42,8 @@ function handleCardClick(name, link) {
  * @param {*} data
  */
 function submitAddPlaceForm(data) {
-  section.addItem({ name: data.place, link: data.link });
+  const newElement=renderer({ name: data.place, link: data.link })
+  section.addItem(newElement);
 }
 
 /**
