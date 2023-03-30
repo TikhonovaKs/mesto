@@ -6,7 +6,7 @@
 * Описание
 
 ## Ссылка на GitHub Pages:
-* https://tikhonovaks.github.io/mesto/build/index.html
+* https://tikhonovaks.github.io/mesto/
 
 ## Интро
 
