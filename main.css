@@ -142,10 +142,10 @@
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/postcss-loader/dist/cjs.js!./src/blocks/popup/__button-title/popup__button-title.css ***!
   \*********************************************************************************************************************************************************************************/
 .popup__button-title{font-size:18px;line-height:50px;margin:0;text-align:center}@media screen and (max-width:640px){.popup__button-title{font-size:14px;line-height:46px}}
-/*!********************************************************************************************************************************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/postcss-loader/dist/cjs.js!./src/blocks/popup/__button-title/_load/popup__button-title_load.css ***!
-  \********************************************************************************************************************************************************************************************/
-.popup__button-title_load{display:none}
+/*!*******************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/postcss-loader/dist/cjs.js!./src/blocks/popup/__button-title-load/popup__button-title_load.css ***!
+  \*******************************************************************************************************************************************************************************************/
+.popup__button-title-load{display:none}
 /*!*********************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/postcss-loader/dist/cjs.js!./src/pages/index.css ***!
   \*********************************************************************************************************************************************/
