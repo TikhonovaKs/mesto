@@ -1,30 +1,3 @@
-export const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg',
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg',
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg',
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg',
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg',
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg',
-  },
-];
-
 export const formValidationConfig = {
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
@@ -46,4 +19,9 @@ export const config = {
 
   selectorPopupEditProfile: '.popup_type_edit',
   selectorEditProfileButton: '.profile__edit-button',
+
+  selectorPopupDeleteCard: '.popup_type_delete_card',
+  selectorPopupEditeAvatar: '.popup_type_edit_avatar',
+  selectorAvatar: '.profile__avatar',
+  selectorImageAvatar: '.profile__avatar-photo'
 };
