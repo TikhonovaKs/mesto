@@ -1,16 +1,25 @@
 class Card {
-  constructor(template, place, handleCardClick) {
+  constructor(template, cardArg) {
     this._template = template;
-    this._name = place.name;
-    this._link = place.link;
-    this._handleCardClick = handleCardClick;
+    this._name = cardArg.data.name;
+    this._link = cardArg.data.link;
+    this._id = cardArg.data._id;
+    this._userId = cardArg.userId;
+    this._ownerId = cardArg.data.ownerId ?? cardArg.data.owner._id;
+    this._likes = cardArg.data.likes;
+    this._isLiked = false;
+    this._handleDeleteIconClick = cardArg.handleDeleteIconClick;
+    this._handleLikeClick = cardArg.handleLikeClick;
+    this._handleCardClick = cardArg.handleCardClick;
 
     this._element = this._getElementFromTemplate();
 
     this._elementImage = this._element.querySelector('.element__image');
     this._elementLikeButton = this._element.querySelector('.element__like-button');
-    this._deletePlace = this._deletePlace.bind(this); // при помощи bind привязать контекст
-    this._likePlace = this._likePlace.bind(this);
+    this._elementTrashButton = this._element.querySelector('.element__trash-button');
+    this._elementLikeAmount = this._element.querySelector('.element__like-amount');
+    this.deletePlace = this.deletePlace.bind(this);
+    this.likePlace = this.likePlace.bind(this);
     this._zoomImagePlace = this._zoomImagePlace.bind(this);
   }
 
@@ -19,17 +28,19 @@ class Card {
   }
 
   _addEventlisteners() {
-    this._element.querySelector('.element__trash-button').addEventListener('click', this._deletePlace);
-    this._elementLikeButton.addEventListener('click', this._likePlace);
+    this._elementTrashButton?.addEventListener('click', () => this._handleDeleteIconClick(this));
+    this._elementLikeButton.addEventListener('click', () => this._handleLikeClick(this));
     this._elementImage.addEventListener('click', this._zoomImagePlace);
   }
 
-  _deletePlace() {
+  deletePlace() {
     this._element.remove();
   }
 
-  _likePlace() {
+  likePlace(numberLikes) {
     this._elementLikeButton.classList.toggle('element__like-button_is-active');
+    this._isLiked = !this._isLiked;
+    this._elementLikeAmount.textContent = numberLikes;
   }
 
   _zoomImagePlace() {
@@ -40,6 +51,10 @@ class Card {
     this._element.querySelector('.element__name').textContent = this._name;
     this._elementImage.src = this._link;
     this._elementImage.alt = this._name;
+    this._elementLikeAmount.textContent = this._likes.length;
+    if (this._userId !== this._ownerId) {
+      this._elementTrashButton.remove();
+    }
 
     this._addEventlisteners();
 
