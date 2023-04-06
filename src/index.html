@@ -14,7 +14,7 @@
       <section class="profile">
         <div class="profile__info">
           <div class="profile__avatar">
-            <img class="profile__avatar-photo" src="" alt="Фотография пользователя в профайле" />
+            <img class="profile__avatar-photo" src="#" alt="Фотография пользователя в профайле" />
             <img
               class="profile__avatar-edit"
               src="<%=require('./images/Vector.svg')%>"
@@ -85,14 +85,14 @@
           />
           <span id="input-place-error" class="error"></span>
           <input
-            id="input-link"
+            id="input-link-card"
             type="url"
             name="link"
             placeholder="Ссылка на картинку"
             class="popup__input popup__input_data_link"
             required
           />
-          <span id="input-link-error" class="error"></span>
+          <span id="input-link-card-error" class="error"></span>
           <button type="submit" class="popup__button-save" aria-label="Создать">
             <h3 class="popup__button-title button-title_visible">Создать</h3>
             <h3 class="popup__button-title-load">Создание...</h3>
@@ -122,14 +122,14 @@
         <h2 class="popup__title">Обновить аватар</h2>
         <form class="popup__form" name="profile" novalidate>
           <input
-            id="input-link"
+            id="input-link-avatar"
             type="url"
             name="link"
             placeholder="Ссылка на аватар"
             class="popup__input popup__input_data_link"
             required
           />
-          <span id="input-link-error" class="error"></span>
+          <span id="input-link-avatar-error" class="error"></span>
           <button type="submit" class="popup__button-save" aria-label="Создать">
             <h3 class="popup__button-title button-title_visible">Сохранить</h3>
             <h3 class="popup__button-title-load">Сохранение...</h3>
