@@ -31,14 +31,6 @@ class Popup {
     this._popupElement.classList.remove('popup_is-opened');
     this._popupElement.removeEventListener('keydown', this._closeByEscape);
   }
-
-  // renderLoading(isLoading) {
-  //   if (isLoading) {
-  //     popup__button - title - load.classList.add('button-title_visible');
-  //   } else {
-  //     popup__button - title.classList.remove('button-title_visible');
-  //   }
-  // }
 }
 
 export default Popup;

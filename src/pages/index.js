@@ -17,14 +17,7 @@ const api = new Api({
   },
 });
 
-// const apiUserInfo = new Api({
-//   url: 'https://nomoreparties.co/v1/cohort-62/users/me',
-//   headers: {
-//     'Content-Type': 'application/json',
-//     authorization: 'fead1d69-c3b2-448b-95f9-e26a4c2cfad0',
-//   },
-// });
-const currentUserId = '559ce76af76ab7ee8fee1b84'; //apiUserInfo.getUserInfo();
+let currentUserId = null;
 
 /**
  * Create section of cards
@@ -32,8 +25,6 @@ const currentUserId = '559ce76af76ab7ee8fee1b84'; //apiUserInfo.getUserInfo();
 const placeContainer = document.querySelector(config.selectorPlaceContainer);
 const templatePlaceList = document.querySelector(config.selectorTemplatePlaceList).content.children[0].cloneNode(true);
 placeContainer.prepend(templatePlaceList);
-// const section = new Section(templatePlaceList, initialCards, renderer);
-// section.renderItems();
 
 const popupZoomImage = document.querySelector(config.selectorPopupZoomImage);
 const zoomImage = new PopupWithImage(popupZoomImage);
@@ -52,7 +43,7 @@ const addPlaceformValidator = new FormValidator(formValidationConfig, formAddPla
 addPlaceformValidator.enableValidation();
 addCardButtonElement.addEventListener('click', () => popupAddPlace.open());
 
-const userInfo = new UserInfo('.profile__job', '.profile__name');
+const userInfo = new UserInfo('.profile__job', '.profile__name', '.profile__avatar-photo');
 
 /**
  * Submit add place form
@@ -75,7 +66,27 @@ function renderer(item) {
     handleCardClick: (name, link) => {
       zoomImage.open(name, link);
     },
-    handleLikeClick: (card) => {},
+
+    handleLikeClick: (card) => {
+      if (card._isLiked) {
+        api
+          .disLikeCard(card._id)
+          .then((cardData) => {
+            const totalCount = cardData.likes.length;
+            card.likePlace(totalCount);
+          })
+          .catch((err) => console.log(err));
+      } else {
+        api
+          .likeCard(card._id)
+          .then((cardData) => {
+            const totalCount = cardData.likes.length;
+            card.likePlace(totalCount);
+          })
+          .catch((err) => console.log(err));
+      }
+    },
+
     handleDeleteIconClick: (card) => {
       popupWithSubmit.open(handleDelete);
 
@@ -94,31 +105,6 @@ function renderer(item) {
   return card.getElement();
 }
 
-/**
- * Open the form for edit a profile
- */
-const popupEditProfileElement = document.querySelector(config.selectorPopupEditProfile);
-const editProfileButtonElement = document.querySelector(config.selectorEditProfileButton);
-const formEditeProfileElement = popupEditProfileElement.querySelector('.popup__form');
-
-const popupEditProfile = new PopupWithForm(popupEditProfileElement, submitEditProfileForm, formValidationConfig);
-popupEditProfile.setListeners();
-const editeProfileformValidator = new FormValidator(formValidationConfig, formEditeProfileElement);
-editeProfileformValidator.enableValidation();
-editProfileButtonElement.addEventListener('click', () => popupEditProfile.open(userInfo.getUserInfo()));
-
-const popupDeleteCard = document.querySelector(config.selectorPopupDeleteCard);
-const popupWithSubmit = new PopupWithSubmit(popupDeleteCard);
-popupWithSubmit.setListeners();
-
-/**
- * Submit edit profile form
- * @param {*} data
- */
-function submitEditProfileForm(data) {
-  userInfo.setUserInfo(data);
-}
-
 const cards = api.getAllPlaces();
 
 let section = null;
@@ -127,7 +113,13 @@ cards
   .then((data) => {
     section = new Section(
       templatePlaceList,
-      data.map((item) => ({ name: item.name, link: item.link, _id: item._id })),
+      data.map((item) => ({
+        name: item.name,
+        link: item.link,
+        _id: item._id,
+        ownerId: item.owner._id,
+        likes: item.likes,
+      })),
       renderer,
       api
     );
@@ -136,12 +128,26 @@ cards
   .catch((err) => alert(err));
 
 const apiUserInfo = new Api({
-  url: 'https://mesto.nomoreparties.co/v1/cohort-62/users/me/avatar',
+  url: 'https://mesto.nomoreparties.co/v1/cohort-62/users/me',
   headers: {
     'Content-Type': 'application/json',
     authorization: 'fead1d69-c3b2-448b-95f9-e26a4c2cfad0',
   },
 });
+
+/**
+ * Get user information
+ */
+function getUserInfo() {
+  apiUserInfo
+    .getUserInfo()
+    .then((data) => {
+      currentUserId = data._id;
+      userInfo.setUserInfo(data);
+    })
+    .catch((err) => alert(err));
+}
+getUserInfo();
 
 /**
  * Open the form for edit an avatar
@@ -166,6 +172,35 @@ function submitEditAvatarForm(link) {
     .changeAvatar(link)
     .then((response) => {
       imageAvatarElement.src = response.avatar;
+    })
+    .catch((err) => alert(err));
+}
+
+/**
+ * Open the form for edit a profile
+ */
+const popupEditProfileElement = document.querySelector(config.selectorPopupEditProfile);
+const editProfileButtonElement = document.querySelector(config.selectorEditProfileButton);
+const formEditeProfileElement = popupEditProfileElement.querySelector('.popup__form');
+
+const popupEditProfile = new PopupWithForm(popupEditProfileElement, submitEditProfileForm, formValidationConfig);
+popupEditProfile.setListeners();
+const editeProfileformValidator = new FormValidator(formValidationConfig, formEditeProfileElement);
+editeProfileformValidator.enableValidation();
+editProfileButtonElement.addEventListener('click', () => popupEditProfile.open(userInfo.getUserInfo()));
+
+const popupDeleteCard = document.querySelector(config.selectorPopupDeleteCard);
+const popupWithSubmit = new PopupWithSubmit(popupDeleteCard);
+popupWithSubmit.setListeners();
+
+/**
+ * Submit edit profile form
+ */
+function submitEditProfileForm(data) {
+  apiUserInfo
+    .editProfileInfo(data)
+    .then((data) => {
+      userInfo.setUserInfo(data);
     })
     .catch((err) => alert(err));
 }
