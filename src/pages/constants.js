@@ -20,8 +20,8 @@ export const config = {
   selectorPopupEditProfile: '.popup_type_edit',
   selectorEditProfileButton: '.profile__edit-button',
 
-  selectorPopupDeleteCard: '.popup_type_delete_card',
-  selectorPopupEditeAvatar: '.popup_type_edit_avatar',
+  selectorPopupDeleteCard: '.popup_type_deleteCard',
+  selectorPopupEditeAvatar: '.popup_type_avatar',
   selectorAvatar: '.profile__avatar',
   selectorImageAvatar: '.profile__avatar-photo'
 };
