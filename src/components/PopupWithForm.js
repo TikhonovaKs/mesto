@@ -50,11 +50,11 @@ class PopupWithForm extends Popup {
 
   _renderLoading(isLoading) {
     if (isLoading) {
-      this._popupButtonTitle.classList.remove('popup_button_visible');
-      this._popupButtonTitleLoad.classList.add('popup_button_visible');
+      this._popupButtonTitle.classList.remove('popup__button-visible');
+      this._popupButtonTitleLoad.classList.add('popup__button-visible');
     } else {
-      this._popupButtonTitle.classList.add('popup_button_visible');
-      this._popupButtonTitleLoad.classList.remove('popup_button_visible');
+      this._popupButtonTitle.classList.add('popup__button-visible');
+      this._popupButtonTitleLoad.classList.remove('popup__button-visible');
     }
   }
 }
