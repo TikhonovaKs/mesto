@@ -10,7 +10,7 @@ import Api from '../components/Api.js';
 import '../pages/index.css';
 
 const api = new Api({
-  url: 'https://mesto.nomoreparties.co/v1/cohort-62/cards',
+  url: 'https://mesto.nomoreparties.co/v1/cohort-62/',
   headers: {
     'Content-Type': 'application/json',
     authorization: 'fead1d69-c3b2-448b-95f9-e26a4c2cfad0',
@@ -50,8 +50,14 @@ const userInfo = new UserInfo('.profile__job', '.profile__name', '.profile__avat
  * @param {*}
  */
 function submitAddPlaceForm(data) {
-  // const newElement = renderer({ name: data.name, link: data.link });
-  section.saveItem(data);
+  api
+    .addPlace({ name: data.place, link: data.link })
+    .then((item) => {
+      section.saveItem(item);
+      popupAddPlace.close();
+    })
+    .catch((err) => alert(err))
+    .finally(() => popupAddPlace.renderLoading(false));
 }
 
 /**
@@ -95,6 +101,7 @@ function renderer(item) {
           .deletePlace(card._id)
           .then(() => {
             card.deletePlace();
+            popupWithSubmit.close();
           })
           .catch((err) => console.log(err));
       }
@@ -105,49 +112,27 @@ function renderer(item) {
   return card.getElement();
 }
 
-const cards = api.getAllPlaces();
-
 let section = null;
 
-cards
-  .then((data) => {
+Promise.all([api.getUserInfo(), api.getAllPlaces()])
+  .then(([userData, cards]) => {
+    currentUserId = userData._id;
+    userInfo.setUserInfo(userData);
+
     section = new Section(
       templatePlaceList,
-      data.map((item) => ({
+      cards.map((item) => ({
         name: item.name,
         link: item.link,
         _id: item._id,
         ownerId: item.owner._id,
         likes: item.likes,
       })),
-      renderer,
-      api
+      renderer
     );
     section.renderItems();
   })
   .catch((err) => alert(err));
-
-const apiUserInfo = new Api({
-  url: 'https://mesto.nomoreparties.co/v1/cohort-62/users/me',
-  headers: {
-    'Content-Type': 'application/json',
-    authorization: 'fead1d69-c3b2-448b-95f9-e26a4c2cfad0',
-  },
-});
-
-/**
- * Get user information
- */
-function getUserInfo() {
-  apiUserInfo
-    .getUserInfo()
-    .then((data) => {
-      currentUserId = data._id;
-      userInfo.setUserInfo(data);
-    })
-    .catch((err) => alert(err));
-}
-getUserInfo();
 
 /**
  * Open the form for edit an avatar
@@ -168,12 +153,14 @@ editAvatarButtonElement.addEventListener('click', () => popupEditAvatar.open());
  *
  */
 function submitEditAvatarForm(link) {
-  apiUserInfo
+  api
     .changeAvatar(link)
     .then((response) => {
-      imageAvatarElement.src = response.avatar;
+      userInfo.setUserInfo(response);
+      popupEditAvatar.close();
     })
-    .catch((err) => alert(err));
+    .catch((err) => alert(err))
+    .finally(() => popupEditAvatar.renderLoading(false));
 }
 
 /**
@@ -197,10 +184,12 @@ popupWithSubmit.setListeners();
  * Submit edit profile form
  */
 function submitEditProfileForm(data) {
-  apiUserInfo
+  api
     .editProfileInfo(data)
     .then((data) => {
       userInfo.setUserInfo(data);
+      popupEditProfile.close();
     })
-    .catch((err) => alert(err));
+    .catch((err) => alert(err))
+    .finally(() => popupEditProfile.renderLoading(false));
 }

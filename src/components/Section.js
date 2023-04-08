@@ -1,19 +1,13 @@
 class Section {
-  constructor(container, items, renderer, api) {
+  constructor(container, items, renderer) {
     this._items = items;
     this._renderer = renderer;
     this._container = container;
-    this._api = api;
   }
 
   saveItem(item) {
-    this._api
-      .addPlace({ name: item.place, link: item.link })
-      .then((data) => {
-        const element = this._renderer(data);
-        this.addItem(element);
-      })
-      .catch((err) => console.log(err));
+    const element = this._renderer(item);
+    this.addItem(element);
   }
 
   addItem(item) {

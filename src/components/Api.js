@@ -4,103 +4,70 @@ class Api {
     this._headers = config.headers;
   }
 
+  _checkResponse(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject('Произошла ошибка');
+  }
+
   getAllPlaces() {
-    return fetch(this._url, {
+    return fetch(`${this._url}cards`, {
       method: 'GET',
       headers: this._headers,
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject('Произошла ошибка');
-    });
+    }).then(this._checkResponse);
   }
 
   addPlace(data) {
-    return fetch(this._url, {
+    return fetch(`${this._url}cards`, {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify(data),
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject('Произошла ошибка');
-    });
+    }).then(this._checkResponse);
   }
 
   deletePlace(id) {
-    return fetch(`${this._url}/${id}`, {
+    return fetch(`${this._url}cards/${id}`, {
       method: 'DELETE',
       headers: this._headers,
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject('Произошла ошибка');
-    });
+    }).then(this._checkResponse);
   }
 
   likeCard(id) {
-    return fetch(`${this._url}/${id}/likes`, {
+    return fetch(`${this._url}cards/${id}/likes`, {
       method: 'PUT',
       headers: this._headers,
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject('Произошла ошибка');
-    });
+    }).then(this._checkResponse);
   }
 
   disLikeCard(id) {
-    return fetch(`${this._url}/${id}/likes`, {
+    return fetch(`${this._url}cards/${id}/likes`, {
       method: 'DELETE',
       headers: this._headers,
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject('Произошла ошибка');
-    });
+    }).then(this._checkResponse);
   }
 
   changeAvatar(link) {
-    return fetch(`${this._url}/avatar`, {
+    return fetch(`${this._url}users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({ avatar: link.link }),
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject('Произошла ошибка');
-    });
+    }).then(this._checkResponse);
   }
 
   editProfileInfo(data) {
-    return fetch(this._url, {
+    return fetch(`${this._url}users/me`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({ about: data.job, name: data.name }),
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject('Произошла ошибка');
-    });
+    }).then(this._checkResponse);
   }
 
   getUserInfo() {
-    return fetch(this._url, {
+    return fetch(`${this._url}users/me`, {
       method: 'GET',
       headers: this._headers,
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject('Произошла ошибка');
-    });
+    }).then(this._checkResponse);
   }
 }
 

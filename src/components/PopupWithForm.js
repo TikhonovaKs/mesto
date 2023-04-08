@@ -17,10 +17,10 @@ class PopupWithForm extends Popup {
 
   _submitForm(evt) {
     evt.preventDefault();
-    this._renderLoading(true);
+    this.renderLoading(true);
     const data = this._getInputValues();
     this._submitFormHandler(data);
-    this.close();
+    
   }
 
   _getInputValues() {
@@ -44,11 +44,10 @@ class PopupWithForm extends Popup {
 
   close() {
     this._popupForm.reset();
-    this._renderLoading(false);
     super.close();
   }
 
-  _renderLoading(isLoading) {
+  renderLoading(isLoading) {
     if (isLoading) {
       this._popupButtonTitle.classList.remove('popup__button-visible');
       this._popupButtonTitleLoad.classList.add('popup__button-visible');
