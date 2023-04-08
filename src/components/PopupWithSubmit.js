@@ -14,7 +14,6 @@ class PopupWithSubmit extends Popup {
   }
 
   _onOkButtonleClick() {
-    this.close();
     this._successCallback();
   }
 
