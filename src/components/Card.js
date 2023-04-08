@@ -7,7 +7,7 @@ class Card {
     this._userId = cardArg.userId;
     this._ownerId = cardArg.data.ownerId ?? cardArg.data.owner._id;
     this._likes = cardArg.data.likes;
-    this._isLiked = false;
+    this._isLiked = this._likes.some(like=>like._id===cardArg.userId);
     this._handleDeleteIconClick = cardArg.handleDeleteIconClick;
     this._handleLikeClick = cardArg.handleLikeClick;
     this._handleCardClick = cardArg.handleCardClick;
@@ -52,6 +52,9 @@ class Card {
     this._elementImage.src = this._link;
     this._elementImage.alt = this._name;
     this._elementLikeAmount.textContent = this._likes.length;
+    if(this._isLiked)
+    this._elementLikeButton.classList.add('element__like-button_is-active');
+
     if (this._userId !== this._ownerId) {
       this._elementTrashButton.remove();
     }
