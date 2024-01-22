@@ -85,7 +85,7 @@
 2. Склонируйте этот репозиторий:
 
     ```bash
-    git clone https://github.com/endjoyer/movies-explorer-frontend
+    git clone https://github.com/TikhonovaKs/mesto.git
     ```
 
 3. Установите все зависимости:
